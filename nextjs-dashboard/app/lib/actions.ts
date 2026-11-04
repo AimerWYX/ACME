@@ -4,8 +4,8 @@ import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import postgres from "postgres";
 import { z } from "zod";
+import { sql } from "./db";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -25,8 +25,6 @@ export async function authenticate(
     throw error;
   }
 }
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 const FormSchema = z.object({
   id: z.string(),
